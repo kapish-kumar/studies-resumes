@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Console – Studies Resumes</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="assets/script.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <h2>Studies Resumes</h2>
+    <nav>
+      <ul>
+        <li><a href="index.html">🏠 Home</a></li>
+        <li><span>AI Console</span></li>
+        <li><a href="advices.html">💬 Advices</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <h1>Offline AI Console</h1>
+    <div class="ai-box">
+      <div id="chat-output" class="chat-output"></div>
+      <div class="chat-input">
+        <input type="text" id="chat-input" placeholder="Type your question here..." />
+        <button id="send-btn">Send</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>©️ 2025 Kapish Kumar · Studies Resumes</footer>
+
+  <script>
+    const chatOutput = document.getElementById('chat-output');
+    const input = document.getElementById('chat-input');
+    const sendBtn = document.getElementById('send-btn');
+
+    // Example offline notes database
+    const notes = {
+      variable: "A variable is a container for storing data values in programming.",
+      python: "Python is a high-level, interpreted programming language known for its readability.",
+      html: "HTML stands for HyperText Markup Language. It structures web content.",
+      sql: "SQL is used for managing data in relational databases.",
+      redes: "Redes e Comunicações covers computer networks, protocols, and data transmission."
+    };
+
+    function addMessage(sender, text) {
+      const msg = document.createElement('div');
+      msg.classList.add('msg', sender);
+      msg.textContent = text;
+      chatOutput.appendChild(msg);
+      chatOutput.scrollTop = chatOutput.scrollHeight;
+    }
+
+    function handleInput() {
+      const query = input.value.trim().toLowerCase();
+      if (!query) return;
+      addMessage('user', query);
+      input.value = '';
+
+      // Basic offline "AI" search
+      let found = null;
+      for (const key in notes) {
+        if (query.includes(key)) {
+          found = notes[key];
+          break;
+        }
+      }
+      if (found) addMessage('bot', found);
+      else addMessage('bot', "Sorry, I couldn't find an answer in your notes. Try adding more keywords!");
+    }
+
+    sendBtn.addEventListener('click', handleInput);
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') handleInput();
+    });
+  </script>
+</body>
+</html>

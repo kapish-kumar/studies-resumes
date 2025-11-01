@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Year 2 – TIC</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script src="../assets/script.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <h2>Studies Resumes</h2>
+    <nav>
+      <ul>
+        <li><a href="../index.html">🏠 Home</a></li>
+        <li><span>2 Year ▼</span>
+          <ul>
+            <li><a href="programming.html">Programming</a></li>
+            <li><a href="tic.html">TIC</a></li>
+            <li><a href="redes.html">Redes</a></li>
+            <li><a href="arquitectura.html">Arquitectura</a></li>
+            <li><a href="maths.html">Maths</a></li>
+            <li><a href="fisica.html">Física</a></li>
+            <li><a href="matematica.html">Matemática</a></li>
+          </ul>
+        </li>
+        <li><a href="../ai-console.html">🤖 AI Console</a></li>
+        <li><a href="../advices.html">💬 Advices</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <h1>Year 2 – TIC</h1>
+    <p>Notes on information systems, office automation, and technology use.</p>
+    <textarea id="notes2tic" placeholder="Your notes here…"></textarea>
+  </main>
+
+  <footer>© 2025 Kapish Kumar · Studies Resumes</footer>
+
+  <script>
+    const t=document.getElementById('notes2tic');
+    t.value=localStorage.getItem('notes2tic')||'';
+    t.addEventListener('input',()=>localStorage.setItem('notes2tic',t.value));
+  </script>
+</body>
+</html>

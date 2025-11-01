@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consolas – Live Code Layout</title>
+  <script>
+    // Tab switching
+    function openConsole(evt, lang) {
+      const tabs = document.querySelectorAll(".console-tab");
+      tabs.forEach(tab => tab.style.display = "none");
+      const buttons = document.querySelectorAll(".tab-button");
+      buttons.forEach(btn => btn.classList.remove("active"));
+      document.getElementById(lang).style.display = "block";
+      evt.currentTarget.classList.add("active");
+    }
+  </script>
+  <style>
+    body {font-family: sans-serif; margin:0; display:flex;}
+    aside {width:250px; background:#1d1f27; color:#fff; padding:20px; height:100vh;}
+    aside a {color:#ccc; text-decoration:none; display:block; margin:5px 0;}
+    main {flex:1; padding:20px;}
+    h1{margin-bottom:20px;}
+    .tabs {display:flex; gap:5px; flex-wrap:wrap; margin-bottom:15px;}
+    .tab-button {padding:8px 15px; cursor:pointer; background:#ccc; border:none; border-radius:5px;}
+    .tab-button.active {background:#1d1f27; color:white;}
+    .console-tab {display:none;}
+    textarea {width:100%; height:200px; font-family: monospace; font-size:14px; padding:10px;}
+    pre {background:#f4f4f4; padding:10px; border-radius:5px; max-height:200px; overflow:auto;}
+  </style>
+</head>
+<body>
+
+<aside>
+  <h2>Studies Resumes</h2>
+  <a href="index.html">🏠 Home</a>
+  <a href="ai-console.html">🤖 AI Console</a>
+  <a href="advices.html">💬 Advices</a>
+</aside>
+
+<main>
+  <h1>Live Coding Consoles (Layout)</h1>
+
+  <div class="tabs">
+    <button class="tab-button active" onclick="openConsole(event,'Python')">Python</button>
+    <button class="tab-button" onclick="openConsole(event,'Java')">Java</button>
+    <button class="tab-button" onclick="openConsole(event,'JavaScript')">JavaScript</button>
+    <button class="tab-button" onclick="openConsole(event,'CSharp')">C#</button>
+    <button class="tab-button" onclick="openConsole(event,'Cpp')">C++</button>
+    <button class="tab-button" onclick="openConsole(event,'HtmlCss')">HTML/CSS</button>
+    <button class="tab-button" onclick="openConsole(event,'Sql')">SQL</button>
+    <button class="tab-button" onclick="openConsole(event,'Pseudocode')">Pseudocode</button>
+  </div>
+
+  <!-- Python Console -->
+  <div id="Python" class="console-tab" style="display:block;">
+    <h3>Python</h3>
+    <textarea placeholder="Write Python code here..."></textarea>
+    <pre>// Output will appear here (offline placeholder)</pre>
+  </div>
+
+  <!-- Java Console -->
+  <div id="Java" class="console-tab">
+    <h3>Java</h3>
+    <textarea placeholder="Write Java code here..."></textarea>
+    <pre>// Output placeholder</pre>
+  </div>
+
+  <!-- JavaScript Console -->
+  <div id="JavaScript" class="console-tab">
+    <h3>JavaScript</h3>
+    <textarea placeholder="Write JS code here..."></textarea>
+    <pre>// Output placeholder</pre>
+  </div>
+
+  <!-- C# Console -->
+  <div id="CSharp" class="console-tab">
+    <h3>C#</h3>
+    <textarea placeholder="Write C# code here..."></textarea>
+    <pre>// Output placeholder</pre>
+  </div>
+
+  <!-- C++ Console -->
+  <div id="Cpp" class="console-tab">
+    <h3>C++</h3>
+    <textarea placeholder="Write C++ code here..."></textarea>
+    <pre>// Output placeholder</pre>
+  </div>
+
+  <!-- HTML/CSS -->
+  <div id="HtmlCss" class="console-tab">
+    <h3>HTML/CSS</h3>
+    <textarea placeholder="Write HTML/CSS here..."></textarea>
+    <pre>// Output placeholder (rendered preview can be added later)</pre>
+  </div>
+
+  <!-- SQL -->
+  <div id="Sql" class="console-tab">
+    <h3>SQL</h3>
+    <textarea placeholder="Write SQL queries here..."></textarea>
+    <pre>// Output placeholder</pre>
+  </div>
+
+  <!-- Pseudocode -->
+  <div id="Pseudocode" class="console-tab">
+    <h3>Pseudocode</h3>
+    <textarea placeholder="Write pseudocode here..."></textarea>
+    <pre>// Output placeholder</pre>
+  </div>
+
+</main>
+
+</body>
+      </html>

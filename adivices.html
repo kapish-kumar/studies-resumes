@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advices – Studies Resumes</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <script src="assets/script.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <h2>Studies Resumes</h2>
+    <nav>
+      <ul>
+        <li><a href="index.html">🏠 Home</a></li>
+        <li><a href="ai-console.html">🤖 AI Console</a></li>
+        <li><span>💬 Advices</span></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <h1>Advices & Notes</h1>
+    <textarea id="adviceBox" placeholder="Write anything here... It will be saved automatically."></textarea>
+  </main>
+
+  <footer>©️ 2025 Kapish Kumar · Studies Resumes</footer>
+
+  <script>
+    const adviceBox = document.getElementById('adviceBox');
+    adviceBox.value = localStorage.getItem('adviceText') || '';
+
+    adviceBox.addEventListener('input', () => {
+      localStorage.setItem('adviceText', adviceBox.value);
+    });
+  </script>
+</body>
+</html>

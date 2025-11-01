@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Year 1 – Arquitectura</title>
+  <link rel="stylesheet" href="../assets/style.css" />
+  <script src="../assets/script.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <h2>Studies Resumes</h2>
+    <nav> … (same sidebar as above) … </nav>
+  </aside>
+
+  <main class="content">
+    <h1>Year 1 – Arquitectura de Computadores</h1>
+    <p>Write your notes about CPU architecture, memory, input/output devices, and logic gates.</p>
+    <textarea id="notes1arq" placeholder="Your notes here…"></textarea>
+  </main>
+
+  <footer>© 2025 Kapish Kumar · Studies Resumes</footer>
+
+  <script>
+    const a=document.getElementById('notes1arq');
+    a.value=localStorage.getItem('notes1arq')||'';
+    a.addEventListener('input',()=>localStorage.setItem('notes1arq',a.value));
+  </script>
+</body>
+</html>

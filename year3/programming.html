@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Year 3 – Programming</title>
+  <link rel="stylesheet" href="../assets/style.css" />
+  <script src="../assets/script.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <h2>Studies Resumes</h2>
+    <nav>
+      <ul>
+        <li><a href="../index.html">🏠 Home</a></li>
+        <li><span>3 Year ▼</span>
+          <ul>
+            <li><a href="programming.html">Programming</a></li>
+            <li><a href="tic.html">TIC</a></li>
+            <li><a href="redes.html">Redes</a></li>
+            <li><a href="arquitectura.html">Arquitectura</a></li>
+            <li><a href="maths.html">Maths</a></li>
+            <li><a href="fisica.html">Física</a></li>
+            <li><a href="matematica.html">Matemática</a></li>
+          </ul>
+        </li>
+        <li><a href="../ai-console.html">🤖 AI Console</a></li>
+        <li><a href="../advices.html">💬 Advices</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <h1>Year 3 – Programming</h1>
+    <p>Advanced topics: algorithms, frameworks, design patterns, and best practices.</p>
+    <textarea id="notes3programming" placeholder="Your notes here…"></textarea>
+  </main>
+
+  <footer>© 2025 Kapish Kumar · Studies Resumes</footer>
+
+  <script>
+    const p3 = document.getElementById('notes3programming');
+    p3.value = localStorage.getItem('notes3programming') || '';
+    p3.addEventListener('input', () => localStorage.setItem('notes3programming', p3.value));
+  </script>
+</body>
+</html>

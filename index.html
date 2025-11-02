@@ -1,23 +1,117 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="pt">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title data-i18n="title">Resumo de Estudos — Técnico de Gestão</title>
   <link rel="stylesheet" href="assets/style.css" />
-  <script src="assets/script.js" defer></script>
-  <title>Studies-Resumes</title>
 </head>
-<body>
-  <header>
-    <h1>Studies-Resumes</h1>
-    <button id="modeToggle">🌓</button>
+<body data-theme="light" data-lang="pt">
+  <!-- Mobile top bar -->
+  <header class="topbar">
+    <button id="hamburger" aria-label="Toggle menu">☰</button>
+    <div class="brand"><span data-i18n="site_name">Resumo de Estudos</span></div>
+    <div class="top-controls">
+      <select id="lang-select" aria-label="Language">
+        <option value="pt">Português</option>
+        <option value="en">English</option>
+      </select>
+      <button id="toggle-theme" aria-label="Toggle theme">🌓</button>
+    </div>
   </header>
 
-  <aside id="sidebar"></aside>
+  <aside class="sidebar" id="sidebar" aria-hidden="false">
+    <div class="sidebar-inner">
+      <h1 class="logo">📘 <span data-i18n="site_name">Resumo de Estudos</span></h1>
 
-  <main>
-    <h2>Welcome!</h2>
-    <p>Select a year and subject from the sidebar to start studying.</p>
+      <nav class="menu" role="navigation">
+        <button class="dropdown" aria-expanded="false"><span data-i18n="year1">Ano 1</span></button>
+        <div class="submenu">
+          <a href="year1/programacao.html" target="content">Programação</a>
+          <a href="year1/redes.html" target="content">Redes</a>
+          <a href="year1/matematica.html" target="content">Matemática</a>
+          <a href="year1/fisica.html" target="content">Física</a>
+          <a href="year1/quimica.html" target="content">Química</a>
+          <a href="year1/tic.html" target="content">TIC</a>
+        </div>
+
+        <button class="dropdown" aria-expanded="false"><span data-i18n="year2">Ano 2</span></button>
+        <div class="submenu">
+          <a href="year2/programacao.html" target="content">Programação</a>
+          <a href="year2/redes.html"target="content">Redes</a>
+          <a href="year2/matematica.html"target="content">Matemática</a>
+          <a href="year2/fisica.html"target="content">Física</a>
+          <a href="year2/quimica.html"target="content">Química</a>
+          <a href="year2/tic.html"target="content">TIC</a>
+        </div>
+
+        <button class="dropdown" aria-expanded="false"><span data-i18n="year3">Ano 3</span></button>
+        <div class="submenu">
+          <a href="year3/programacao.html" target="content">Programação</a>
+          <a href="year3/redes.html" target="content">Redes</a>
+          <a href="year3/matematica.html"target="content">Matemática</a>
+          <a href="year3/fisica.html"target="content">Física</a>
+          <a href="year3/quimica.html"target="content">Química</a>
+          <a href="year3/tic.html"target="content">TIC</a>
+        </div>
+
+        <button class="dropdown" aria-expanded="false"><span data-i18n="practice">Prática</span></button>
+        <div class="submenu">
+          <a href="practice/python.html" target="content">Python</a>
+          <a href="practice/javascript.html" target="content">JavaScript</a>
+          <a href="practice/java.html" target="content">Java</a>
+          <a href="practice/sql.html" target="content">SQL</a>
+          <a href="practice/c.html" target="content">C</a>
+          <a href="practice/csharp.html" target="content">C#</a>
+          <a href="practice/c++.html" target="content">C++</a>
+        </div>
+
+        <button class="dropdown">Tools</button>
+        <div class="submenu">
+          <a href="notes.html" target="content">📝 Notes</a>
+          <a href="search.html" target="content">🔍 Search</a>
+        </div>
+      </nav>
+
+      <footer class="sidebar-foot">
+        <small data-i18n="help_text">Clique num tópico para abrir. Use Notas & Pesquisa.</small>
+      </footer>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="tabs">
+      <button class="tab active" data-target="iframe-tab" data-i18n="tab_pages">Páginas</button>
+      <button class="tab" data-target="notes-tab" data-i18n="tab_notes">Notas</button>
+      <button class="tab" data-target="search-tab" data-i18n="tab_search">Pesquisar</button>
+    </div>
+
+    <section id="iframe-tab" class="tab-pane">
+      <iframe id="content-frame" name="content" src="welcome.html" title="Content"></iframe>
+    </section>
+
+    <section id="notes-tab" class="tab-pane hidden">
+      <div class="notes-toolbar">
+        <button id="notes-save" data-i18n="save_note">Guardar</button>
+        <button id="notes-clear" data-i18n="clear_note">Limpar</button>
+        <button id="notes-export" data-i18n="export_note">Exportar</button>
+        <button id="notes-import" data-i18n="import_note">Importar</button>
+        <label><input type="checkbox" id="auto-save" /> <span data-i18n="auto_save">Auto guardar</span></label>
+      </div>
+      <div id="notes-editor" class="editor" contenteditable="true" placeholder="Escreva aqui as suas notas..."></div>
+    </section>
+
+    <section id="search-tab" class="tab-pane hidden">
+      <div class="search-row">
+        <input id="site-search" placeholder="Pesquisar no site..." />
+        <button id="search-btn" data-i18n="search">Pesquisar</button>
+      </div>
+      <div id="search-results"></div>
+    </section>
   </main>
+
+  <script src="assets/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"></script>
 </body>
-</html>
+  </html>

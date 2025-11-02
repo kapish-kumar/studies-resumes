@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Java Practice | Prática Java</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-lang="java">
+  <header>
+    <h1><span class="lang-pt">Console de Prática</span><span class="lang-en hidden">Practice Console</span></h1>
+    <div class="controls">
+      <button id="theme-toggle">🌙</button>
+      <button id="lang-toggle">🌐</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="editor">
+      <textarea id="code-area">public class Main {
+    public static void main(String[] args) {
+        System.out.println("Olá, mundo!");
+    }
+}</textarea>
+      <div class="buttons">
+        <a href="https://www.programiz.com/java-programming/online-compiler/" target="_blank">
+          <span class="lang-pt">Abrir compilador externo</span>
+          <span class="lang-en hidden">Open external compiler</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="notes">
+      <h2><span class="lang-pt">Notas Pessoais</span><span class="lang-en hidden">Personal Notes</span></h2>
+      <textarea id="notes-area" placeholder="Write your notes..."></textarea>
+      <button id="save-notes"><span class="lang-pt">Guardar Notas</span><span class="lang-en hidden">Save Notes</span></button>
+    </section>
+  </main>
+
+  <script src="../assets/practice.js"></script>
+</body>
+</html>

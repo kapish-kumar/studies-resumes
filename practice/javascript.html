@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Practice | Prática JavaScript</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-lang="javascript">
+  <header>
+    <h1><span class="lang-pt">Console de Prática</span><span class="lang-en hidden">Practice Console</span></h1>
+    <div class="controls">
+      <button id="theme-toggle">🌙</button>
+      <button id="lang-toggle">🌐</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="editor">
+      <textarea id="code-area">console.log("Olá, mundo!");</textarea>
+      <div class="buttons">
+        <button id="run-btn"><span class="lang-pt">Executar</span><span class="lang-en hidden">Run Code</span></button>
+      </div>
+      <iframe id="output-frame"></iframe>
+    </section>
+
+    <section class="notes">
+      <h2><span class="lang-pt">Notas Pessoais</span><span class="lang-en hidden">Personal Notes</span></h2>
+      <textarea id="notes-area" placeholder="Write your notes..."></textarea>
+      <button id="save-notes"><span class="lang-pt">Guardar Notas</span><span class="lang-en hidden">Save Notes</span></button>
+    </section>
+  </main>
+
+  <script src="../assets/practice.js"></script>
+</body>
+</html>

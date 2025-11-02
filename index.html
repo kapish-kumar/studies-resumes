@@ -3,23 +3,23 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title data-i18n="title">Resumo de Estudos — Técnico de Gestão</title>
+  <title>Resumo de Estudos — Técnico de Gestão</title>
   <link rel="stylesheet" href="assets/style.css" />
 </head>
-<body data-theme="light" data-lang="pt">
+<body>
   <!-- Mobile top bar -->
   <header class="topbar">
     <button id="hamburger" aria-label="Toggle menu">☰</button>
-    <div class="brand"><span data-i18n="site_name">Resumo de Estudos</span></div>
-    
+    <div class="brand">Resumo de Estudos</div>
   </header>
 
   <aside class="sidebar" id="sidebar" aria-hidden="false">
     <div class="sidebar-inner">
-      <h1 class="logo">📘 <span data-i18n="site_name">Resumo de Estudos</span></h1>
+      <h1 class="logo">📘 Resumo de Estudos</h1>
 
       <nav class="menu" role="navigation">
-        <button class="dropdown" aria-expanded="false"><span data-i18n="year1">Ano 1</span></button>
+        <!-- Ano 1 -->
+        <button class="dropdown" aria-expanded="false">Ano 1</button>
         <div class="submenu">
           <a href="year1/programacao.html" target="content">Programação</a>
           <a href="year1/redes.html" target="content">Redes</a>
@@ -27,32 +27,35 @@
           <a href="year1/fisica.html" target="content">Física</a>
           <a href="year1/quimica.html" target="content">Química</a>
           <a href="year1/tic.html" target="content">TIC</a>
-          <a href="year1/arquitectura.html"target="content">Arquitetura</a>
+          <a href="year1/arquitectura.html" target="content">Arquitetura</a>
         </div>
 
-        <button class="dropdown" aria-expanded="false"><span data-i18n="year2">Ano 2</span></button>
+        <!-- Ano 2 -->
+        <button class="dropdown" aria-expanded="false">Ano 2</button>
         <div class="submenu">
           <a href="year2/programacao.html" target="content">Programação</a>
-          <a href="year2/redes.html"target="content">Redes</a>
-          <a href="year2/matematica.html"target="content">Matemática</a>
-          <a href="year2/fisica.html"target="content">Física</a>
-          <a href="year2/quimica.html"target="content">Química</a>
-          <a href="year2/tic.html"target="content">TIC</a>
-          <a href="year2/arquitectura.html"target="content">Arquitetura</a>
+          <a href="year2/redes.html" target="content">Redes</a>
+          <a href="year2/matematica.html" target="content">Matemática</a>
+          <a href="year2/fisica.html" target="content">Física</a>
+          <a href="year2/quimica.html" target="content">Química</a>
+          <a href="year2/tic.html" target="content">TIC</a>
+          <a href="year2/arquitectura.html" target="content">Arquitetura</a>
         </div>
 
-        <button class="dropdown" aria-expanded="false"><span data-i18n="year3">Ano 3</span></button>
+        <!-- Ano 3 -->
+        <button class="dropdown" aria-expanded="false">Ano 3</button>
         <div class="submenu">
           <a href="year3/programacao.html" target="content">Programação</a>
           <a href="year3/redes.html" target="content">Redes</a>
-          <a href="year3/matematica.html"target="content">Matemática</a>
-          <a href="year3/fisica.html"target="content">Física</a>
-          <a href="year3/quimica.html"target="content">Química</a>
-          <a href="year3/tic.html"target="content">TIC</a>
-          <a href="year3/arquitectura.html"target="content">Arquitetura</a>
+          <a href="year3/matematica.html" target="content">Matemática</a>
+          <a href="year3/fisica.html" target="content">Física</a>
+          <a href="year3/quimica.html" target="content">Química</a>
+          <a href="year3/tic.html" target="content">TIC</a>
+          <a href="year3/arquitectura.html" target="content">Arquitetura</a>
         </div>
 
-        <button class="dropdown" aria-expanded="false"><span data-i18n="practice">Prática</span></button>
+        <!-- Prática -->
+        <button class="dropdown" aria-expanded="false">Prática</button>
         <div class="submenu">
           <a href="practice/python.html" target="content">Python</a>
           <a href="practice/javascript.html" target="content">JavaScript</a>
@@ -62,15 +65,15 @@
           <a href="practice/csharp.html" target="content">C#</a>
           <a href="practice/c++.html" target="content">C++</a>
         </div>
-   </nav>
+      </nav>
     </div>
   </aside>
 
   <main class="main">
     <div class="tabs">
-      <button class="tab active" data-target="iframe-tab" data-i18n="tab_pages">Páginas</button>
-      <button class="tab" data-target="notes-tab" data-i18n="tab_notes">Notas</button>
-      <button class="tab" data-target="search-tab" data-i18n="tab_search">Pesquisar</button>
+      <button class="tab active" data-target="iframe-tab">Páginas</button>
+      <button class="tab" data-target="notes-tab">Notas</button>
+      <button class="tab" data-target="search-tab">Pesquisar</button>
     </div>
 
     <section id="iframe-tab" class="tab-pane">
@@ -79,11 +82,11 @@
 
     <section id="notes-tab" class="tab-pane hidden">
       <div class="notes-toolbar">
-        <button id="notes-save" data-i18n="save_note">Guardar</button>
-        <button id="notes-clear" data-i18n="clear_note">Limpar</button>
-        <button id="notes-export" data-i18n="export_note">Exportar</button>
-        <button id="notes-import" data-i18n="import_note">Importar</button>
-        <label><input type="checkbox" id="auto-save" /> <span data-i18n="auto_save">Auto guardar</span></label>
+        <button id="notes-save">Guardar</button>
+        <button id="notes-clear">Limpar</button>
+        <button id="notes-export">Exportar</button>
+        <button id="notes-import">Importar</button>
+        <label><input type="checkbox" id="auto-save" /> Auto guardar</label>
       </div>
       <div id="notes-editor" class="editor" contenteditable="true" placeholder="Escreva aqui as suas notas..."></div>
     </section>
@@ -91,7 +94,7 @@
     <section id="search-tab" class="tab-pane hidden">
       <div class="search-row">
         <input id="site-search" placeholder="Pesquisar no site..." />
-        <button id="search-btn" data-i18n="search">Pesquisar</button>
+        <button id="search-btn">Pesquisar</button>
       </div>
       <div id="search-results"></div>
     </section>
@@ -101,4 +104,4 @@
   <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"></script>
 </body>
-  </html>
+            </html>

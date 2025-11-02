@@ -1,44 +1,5 @@
-/* Main site script: sidebar toggles, tabs, notes, search, theme, language */
+/* Main site script: sidebar toggles, tabs, notes, search */
 (() => {
-  const translations = {
-    en: {
-      title: "Studies Resumes — Management Technician",
-      site_name: "Studies Resumes",
-      year1: "Year 1",
-      year2: "Year 2",
-      year3: "Year 3",
-      practice: "Practice",
-      help_text: "Click a topic to open. Use Notes & Search.",
-      tab_pages: "Pages",
-      tab_notes: "Notes",
-      tab_search: "Search",
-      save_note: "Save",
-      clear_note: "Clear",
-      export_note: "Export",
-      import_note: "Import",
-      auto_save: "Auto save",
-      search: "Search"
-    },
-    pt: {
-      title: "Resumo de Estudos — Técnico de Gestão",
-      site_name: "Resumo de Estudos",
-      year1: "Ano 1",
-      year2: "Ano 2",
-      year3: "Ano 3",
-      practice: "Prática",
-      help_text: "Clique num tópico para abrir. Use Notas & Pesquisa.",
-      tab_pages: "Páginas",
-      tab_notes: "Notas",
-      tab_search: "Pesquisar",
-      save_note: "Guardar",
-      clear_note: "Limpar",
-      export_note: "Exportar",
-      import_note: "Importar",
-      auto_save: "Auto guardar",
-      search: "Pesquisar"
-    }
-  };
-
   const $ = (s, r=document) => r.querySelector(s);
   const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
 
@@ -74,36 +35,6 @@
       $(`#${t.dataset.target}`).classList.remove('hidden');
     });
   });
-
-  // Theme
-  const themeBtn = $('#toggle-theme');
-  const savedTheme = localStorage.getItem('sr_theme') || 'light';
-  document.body.setAttribute('data-theme', savedTheme);
-  themeBtn.addEventListener('click', () => {
-    const cur = document.body.getAttribute('data-theme') || 'light';
-    const next = cur === 'light' ? 'dark' : 'light';
-    document.body.setAttribute('data-theme', next);
-    localStorage.setItem('sr_theme', next);
-  });
-
-  // Language
-  const langSelect = $('#lang-select');
-  const savedLang = localStorage.getItem('sr_lang') || 'pt';
-  langSelect.value = savedLang;
-  setLang(savedLang);
-  langSelect.addEventListener('change', e => {
-    setLang(e.target.value);
-    localStorage.setItem('sr_lang', e.target.value);
-  });
-
-  function setLang(l) {
-    document.documentElement.lang = l;
-    document.title = translations[l].title;
-    $$('[data-i18n]').forEach(el => {
-      const key = el.getAttribute('data-i18n');
-      if (translations[l][key]) el.textContent = translations[l][key];
-    });
-  }
 
   // Notes
   const notesKey = () => `sr_notes_${document.body.getAttribute('data-lang') || 'pt'}`;

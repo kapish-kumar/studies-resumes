@@ -1,46 +1,33 @@
-const askBtn = document.getElementById('askBtn');
-const userInput = document.getElementById('userInput');
-const responseDiv = document.getElementById('response');
+const chatBox = document.getElementById("chat-box");
+const userInput = document.getElementById("user-input");
+const sendBtn = document.getElementById("send-btn");
 
-// ⚠️ Replace this with your real OpenAI API key
-const OPENAI_API_KEY = "";
+function addMessage(sender, text) {
+  const div = document.createElement("div");
+  div.classList.add(sender);
+  div.textContent = `${sender === "user" ? "You" : "AI"}: ${text}`;
+  chatBox.appendChild(div);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
 
-askBtn.addEventListener('click', async () => {
-  const question = userInput.value.trim();
-  if (!question) {
-    responseDiv.innerHTML = "Please enter a question!";
-    return;
-  }
+sendBtn.addEventListener("click", async () => {
+  const message = userInput.value.trim();
+  if (!message) return;
 
-  responseDiv.innerHTML = "<em>Thinking...</em>";
+  addMessage("user", message);
+  userInput.value = "";
 
   try {
-    const res = await fetch("https://api.openai.com/v1/chat/completions", {
+    const res = await fetch("http://localhost:3000/api/chat", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${OPENAI_API_KEY}`
-      },
-      body: JSON.stringify({
-        model: "gpt-3.5-turbo",
-        messages: [
-          { role: "system", content: "You are a helpful AI tutor for students." },
-          { role: "user", content: question }
-        ]
-      })
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message }),
     });
 
     const data = await res.json();
-
-    if (data.error) {
-      responseDiv.innerHTML = `<span style="color:red;">Error: ${data.error.message}</span>`;
-      return;
-    }
-
-    const reply = data.choices[0].message.content;
-    responseDiv.innerHTML = `<strong>AI:</strong> ${reply}`;
-
-  } catch (error) {
-    responseDiv.innerHTML = `<span style="color:red;">Error: ${error.message}</span>`;
+    const reply = data.choices?.[0]?.message?.content || "No response.";
+    addMessage("ai", reply);
+  } catch (err) {
+    addMessage("ai", "Error: " + err.message);
   }
 });

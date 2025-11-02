@@ -1,0 +1,77 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  transition: background 0.3s, color 0.3s;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: #1e1e2f;
+  color: white;
+}
+
+body.light header {
+  background: #0078d7;
+}
+
+#sidebar {
+  position: fixed;
+  top: 4rem;
+  left: 0;
+  width: 240px;
+  height: calc(100% - 4rem);
+  background: #1e1e2f;
+  color: white;
+  padding: 1rem;
+  overflow-y: auto;
+  transition: left 0.3s;
+}
+
+body.light #sidebar {
+  background: #0078d7;
+  color: white;
+}
+
+main {
+  margin-left: 260px;
+  padding: 1rem;
+}
+
+.module {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.3rem 0;
+}
+
+.module button {
+  padding: 0.3rem 0.7rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.module.complete button {
+  background: #4caf50;
+  color: white;
+}
+
+textarea {
+  width: 100%;
+  min-height: 150px;
+}
+
+@media (max-width: 700px) {
+  #sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+  }
+
+  main {
+    margin: 0;
+  }
+}

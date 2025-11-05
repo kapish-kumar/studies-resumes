@@ -216,6 +216,7 @@ a:focus, button:focus, input:focus, textarea:focus {
   outline:3px solid rgba(26,115,232,0.2);
   outline-offset:2px;
   }
+
 /*highlight search*/
 mark {
   background: yellow;

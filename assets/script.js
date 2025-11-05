@@ -6,7 +6,7 @@
   // Drawer / hamburger
   const sidebar = $('#sidebar');
   const burger = $('#hamburger');
-  burger.addEventListener('click', () => {
+  burger?.addEventListener('click', () => {
     const hidden = sidebar.getAttribute('aria-hidden') === 'true';
     sidebar.setAttribute('aria-hidden', String(!hidden));
   });
@@ -47,10 +47,10 @@
 
   $('#notes-save')?.addEventListener('click', () => {
     localStorage.setItem(notesKey(), editor.innerHTML);
-    flash('Notas guardadas');
+    flash('Notes saved');
   });
   $('#notes-clear')?.addEventListener('click', () => {
-    if (confirm('Limpar todas as notas?')) {
+    if (confirm('Clear all notes?')) {
       editor.innerHTML = '';
       localStorage.removeItem(notesKey());
     }
@@ -60,7 +60,7 @@
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'notas.html';
+    a.download = 'notes.html';
     a.click();
     URL.revokeObjectURL(url);
   });
@@ -102,12 +102,119 @@
   }
 
   // -------------------------------
-  // 🔍 SEARCH (manual list)
+  // 🔍 SEARCH (manual page list)
   // -------------------------------
 
   const pagesToIndex = [
     {url:'welcome.html', title:'Bem-vindo'},
-    // ... (keep your full list of Ano 1–3 + Prática pages here)
+
+    // ----------------------------
+    // 📘 ANO 1
+    // ----------------------------
+    {url:'year1/programacao/modulo1.html', title:'Ano 1 — Programação Módulo 1'},
+    {url:'year1/programacao/modulo2.html', title:'Ano 1 — Programação Módulo 2'},
+    {url:'year1/programacao/modulo3.html', title:'Ano 1 — Programação Módulo 3'},
+    {url:'year1/redes/modulo1.html', title:'Ano 1 — Redes Módulo 1'},
+    {url:'year1/redes/modulo2.html', title:'Ano 1 — Redes Módulo 2'},
+    {url:'year1/redes/modulo3.html', title:'Ano 1 — Redes Módulo 3'},
+    {url:'year1/fisica/f1.html', title:'Ano 1 — Física F1'},
+    {url:'year1/fisica/f2.html', title:'Ano 1 — Física F2'},
+    {url:'year1/fisica/f3.html', title:'Ano 1 — Física F3'},
+    {url:'year1/fisica/f4.html', title:'Ano 1 — Física F4'},
+    {url:'year1/quimica/f1.html', title:'Ano 1 — Química F1'},
+    {url:'year1/quimica/f2.html', title:'Ano 1 — Química F2'},
+    {url:'year1/quimica/f3.html', title:'Ano 1 — Química F3'},
+    {url:'year1/quimica/f4.html', title:'Ano 1 — Química F4'},
+    {url:'year1/matematica/p1.html', title:'Ano 1 — Matemática P1'},
+    {url:'year1/matematica/p2.html', title:'Ano 1 — Matemática P2'},
+    {url:'year1/matematica/p3.html', title:'Ano 1 — Matemática P3'},
+    {url:'year1/matematica/p4.html', title:'Ano 1 — Matemática P4'},
+    {url:'year1/matematica/p5.html', title:'Ano 1 — Matemática P5'},
+    {url:'year1/matematica/p6.html', title:'Ano 1 — Matemática P6'},
+    {url:'year1/matematica/p7.html', title:'Ano 1 — Matemática P7'},
+    {url:'year1/matematica/p8.html', title:'Ano 1 — Matemática P8'},
+    {url:'year1/tic/modulo1.html', title:'Ano 1 — TIC Módulo 1'},
+    {url:'year1/tic/modulo2.html', title:'Ano 1 — TIC Módulo 2'},
+    {url:'year1/tic/modulo3.html', title:'Ano 1 — TIC Módulo 3'},
+    {url:'year1/arquitectura/modulo1/unidade1.html', title:'Ano 1 — Arquitetura Módulo 1 Unidade 1'},
+    {url:'year1/arquitectura/modulo1/unidade2.html', title:'Ano 1 — Arquitetura Módulo 1 Unidade 2'},
+    {url:'year1/arquitectura/modulo2.html', title:'Ano 1 — Arquitetura Módulo 2'},
+    {url:'year1/arquitectura/modulo3.html', title:'Ano 1 — Arquitetura Módulo 3'},
+
+    // ----------------------------
+    // 📗 ANO 2
+    // ----------------------------
+    {url:'year2/programacao/modulo1.html', title:'Ano 2 — Programação Módulo 1'},
+    {url:'year2/programacao/modulo2.html', title:'Ano 2 — Programação Módulo 2'},
+    {url:'year2/programacao/modulo3.html', title:'Ano 2 — Programação Módulo 3'},
+    {url:'year2/redes/modulo1.html', title:'Ano 2 — Redes Módulo 1'},
+    {url:'year2/redes/modulo2.html', title:'Ano 2 — Redes Módulo 2'},
+    {url:'year2/redes/modulo3.html', title:'Ano 2 — Redes Módulo 3'},
+    {url:'year2/fisica/f1.html', title:'Ano 2 — Física F1'},
+    {url:'year2/fisica/f2.html', title:'Ano 2 — Física F2'},
+    {url:'year2/fisica/f3.html', title:'Ano 2 — Física F3'},
+    {url:'year2/fisica/f4.html', title:'Ano 2 — Física F4'},
+    {url:'year2/quimica/f1.html', title:'Ano 2 — Química F1'},
+    {url:'year2/quimica/f2.html', title:'Ano 2 — Química F2'},
+    {url:'year2/quimica/f3.html', title:'Ano 2 — Química F3'},
+    {url:'year2/quimica/f4.html', title:'Ano 2 — Química F4'},
+    {url:'year2/matematica/p1.html', title:'Ano 2 — Matemática P1'},
+    {url:'year2/matematica/p2.html', title:'Ano 2 — Matemática P2'},
+    {url:'year2/matematica/p3.html', title:'Ano 2 — Matemática P3'},
+    {url:'year2/matematica/p4.html', title:'Ano 2 — Matemática P4'},
+    {url:'year2/matematica/p5.html', title:'Ano 2 — Matemática P5'},
+    {url:'year2/matematica/p6.html', title:'Ano 2 — Matemática P6'},
+    {url:'year2/matematica/p7.html', title:'Ano 2 — Matemática P7'},
+    {url:'year2/matematica/p8.html', title:'Ano 2 — Matemática P8'},
+    {url:'year2/tic/modulo1.html', title:'Ano 2 — TIC Módulo 1'},
+    {url:'year2/tic/modulo2.html', title:'Ano 2 — TIC Módulo 2'},
+    {url:'year2/tic/modulo3.html', title:'Ano 2 — TIC Módulo 3'},
+    {url:'year2/arquitectura/modulo1/unidade1.html', title:'Ano 2 — Arquitetura Módulo 1 Unidade 1'},
+    {url:'year2/arquitectura/modulo1/unidade2.html', title:'Ano 2 — Arquitetura Módulo 1 Unidade 2'},
+    {url:'year2/arquitectura/modulo2.html', title:'Ano 2 — Arquitetura Módulo 2'},
+    {url:'year2/arquitectura/modulo3.html', title:'Ano 2 — Arquitetura Módulo 3'},
+
+    // ----------------------------
+    // 📙 ANO 3
+    // ----------------------------
+    {url:'year3/programacao/modulo1.html', title:'Ano 3 — Programação Módulo 1'},
+    {url:'year3/programacao/modulo2.html', title:'Ano 3 — Programação Módulo 2'},
+    {url:'year3/programacao/modulo3.html', title:'Ano 3 — Programação Módulo 3'},
+    {url:'year3/redes/modulo1.html', title:'Ano 3 — Redes Módulo 1'},
+    {url:'year3/redes/modulo2.html', title:'Ano 3 — Redes Módulo 2'},
+    {url:'year3/redes/modulo3.html', title:'Ano 3 — Redes Módulo 3'},
+    {url:'year3/fisica/f1.html', title:'Ano 3 — Física F1'},
+    {url:'year3/fisica/f2.html', title:'Ano 3 — Física F2'},
+    {url:'year3/fisica/f3.html', title:'Ano 3 — Física F3'},
+    {url:'year3/fisica/f4.html', title:'Ano 3 — Física F4'},
+    {url:'year3/quimica/f1.html', title:'Ano 3 — Química F1'},
+    {url:'year3/quimica/f2.html', title:'Ano 3 — Química F2'},
+    {url:'year3/quimica/f3.html', title:'Ano 3 — Química F3'},
+    {url:'year3/quimica/f4.html', title:'Ano 3 — Química F4'},
+    {url:'year3/matematica/p1.html', title:'Ano 3 — Matemática P1'},
+    {url:'year3/matematica/p2.html', title:'Ano 3 — Matemática P2'},
+    {url:'year3/matematica/p3.html', title:'Ano 3 — Matemática P3'},
+    {url:'year3/matematica/p4.html', title:'Ano 3 — Matemática P4'},
+    {url:'year3/matematica/p5.html', title:'Ano 3 — Matemática P5'},
+    {url:'year3/matematica/p6.html', title:'Ano 3 — Matemática P6'},
+    {url:'year3/matematica/p7.html', title:'Ano 3 — Matemática P7'},
+    {url:'year3/matematica/p8.html', title:'Ano 3 — Matemática P8'},
+    {url:'year3/tic/modulo1.html', title:'Ano 3 — TIC Módulo 1'},
+    {url:'year3/tic/modulo2.html', title:'Ano 3 — TIC Módulo 2'},
+    {url:'year3/tic/modulo3.html', title:'Ano 3 — TIC Módulo 3'},
+    {url:'year3/arquitectura/modulo1/unidade1.html', title:'Ano 3 — Arquitetura Módulo 1 Unidade 1'},
+    {url:'year3/arquitectura/modulo1/unidade2.html', title:'Ano 3 — Arquitetura Módulo 1 Unidade 2'},
+    {url:'year3/arquitectura/modulo2.html', title:'Ano 3 — Arquitetura Módulo 2'},
+    {url:'year3/arquitectura/modulo3.html', title:'Ano 3 — Arquitetura Módulo 3'},
+
+    // 🧠 PRÁTICA
+    {url:'practice/python.html', title:'Prática — Python'},
+    {url:'practice/javascript.html', title:'Prática — JavaScript'},
+    {url:'practice/java.html', title:'Prática — Java'},
+    {url:'practice/sql.html', title:'Prática — SQL'},
+    {url:'practice/c.html', title:'Prática — C'},
+    {url:'practice/csharp.html', title:'Prática — C#'},
+    {url:'practice/cpp.html', title:'Prática — C++'}
   ];
 
   const pageCache = {};
@@ -143,7 +250,6 @@
     const out = $('#search-results');
     out.innerHTML = '';
     const results = [];
-
     for (const url in pageCache) {
       const entry = pageCache[url];
       if (!entry.text) continue;
@@ -167,25 +273,35 @@
         <h4>${r.title}</h4>
         <div class="result-snippet">${escapeHtml(r.snippet)}</div>
         <div style="margin-top:8px">
-          <button class="open-page" data-url="${r.url}">Abrir</button>
+          <button class="abrir-btn" data-url="${r.url}" style="
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+          ">Abrir</button>
         </div>`;
       out.appendChild(item);
+    });
+
+    // 🔗 make buttons open in iframe named "content"
+    $$('.abrir-btn', out).forEach(btn => {
+      btn.addEventListener('click', () => {
+        const url = btn.getAttribute('data-url');
+        const iframe = window.frames['content'];
+        if (iframe) {
+          iframe.location.href = url;
+        } else {
+          window.location.href = url;
+        }
+      });
     });
   }
 
   function escapeHtml(s) {
     return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
-
-  // 🧭 Handle button clicks
-  document.addEventListener('click', e => {
-    if (e.target.classList.contains('open-page')) {
-      const url = e.target.getAttribute('data-url');
-      const iframe = document.querySelector('iframe[name="content"]');
-      if (iframe) iframe.src = url;
-      flash('Página carregada!');
-    }
-  });
 
   window.addEventListener('load', loadNotes);
 })();

@@ -259,4 +259,4 @@
   {url:'practice/c.html', title:'Prática — C'},
   {url:'practice/csharp.html', title:'Prática — C#'},
   {url:'practice/cpp.html', title:'Prática — C++'}
-];
+]})();

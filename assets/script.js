@@ -101,70 +101,120 @@
     setTimeout(() => el.remove(), 1800);
   }
 
-  // Search
-  const pagesToIndex = [
-    {url:'welcome.html', title:'Welcome'},
-    {url:'year1/programacao.html', title:'Ano1 — Programação'},
-    {url:'year1/redes.html', title:'Ano1 — Redes'},
-    {url:'year2/programacao.html', title:'Ano2 — Programação'},
-    {url:'year3/programacao.html', title:'Ano3 — Programação'},
-    {url:'practice/python.html', title:'Practice Python'}
-    // add all your pages …
-  ];
-  const pageCache = {};
-  let indexed = false;
+  // --- AUTO-INDEXING SEARCH SYSTEM ---
 
-  async function indexPages() {
-    const ps = pagesToIndex.map(async p => {
-      try {
-        const r = await fetch(p.url);
-        const txt = await r.text();
-        const div = document.createElement('div');
-        div.innerHTML = txt;
-        pageCache[p.url] = {title:p.title, text: div.innerText.slice(0,20000)};
-      } catch(e) {
-        pageCache[p.url] = {title:p.title, text:''};
-      }
-    });
-    await Promise.all(ps);
-  }
+const pageCache = {};
+let indexed = false;
+let indexingInProgress = false;
 
-  $('#search-btn')?.addEventListener('click', async () => {
-    const q = $('#site-search').value.trim().toLowerCase();
-    if (!q) return;
-    if (!indexed) { await indexPages(); indexed = true; }
-    runSearch(q);
+// Collect all sidebar links automatically
+function collectSidebarLinks() {
+  const links = Array.from(document.querySelectorAll('.menu a'));
+  const unique = new Map();
+  links.forEach(link => {
+    const url = link.getAttribute('href');
+    if (!url || unique.has(url)) return;
+    unique.set(url, { url, title: link.textContent.trim() });
   });
-  $('#site-search')?.addEventListener('keydown', e => { if (e.key === 'Enter') $('#search-btn').click(); });
+  return Array.from(unique.values());
+}
 
-  function runSearch(q) {
-    const out = $('#search-results');
-    out.innerHTML = '';
-    const results = [];
-    for (const url in pageCache) {
-      const entry = pageCache[url];
-      if (!entry.text) continue;
-      const idx = entry.text.toLowerCase().indexOf(q);
-      if (idx !== -1) {
-        const start = Math.max(0, idx - 80);
-        const snippet = (start ? '…' : '') + entry.text.slice(start, idx + 160) + (entry.text.length > idx + 160 ? '…' : '');
-        results.push({url, title: entry.title, snippet});
-      }
+// Fetch and index the text content of all linked pages
+async function indexPages() {
+  if (indexed || indexingInProgress) return;
+  indexingInProgress = true;
+
+  const pagesToIndex = collectSidebarLinks();
+  const status = document.createElement('div');
+  status.id = 'search-status';
+  status.textContent = '🔍 A indexar páginas...';
+  status.style.cssText = `
+    position: fixed; bottom: 16px; left: 16px;
+    background: var(--card, #fff);
+    border: 1px solid var(--border, #ccc);
+    padding: 8px 12px; border-radius: 8px;
+    font-size: 14px; z-index: 9999;
+  `;
+  document.body.appendChild(status);
+
+  const ps = pagesToIndex.map(async (p, i) => {
+    try {
+      const r = await fetch(p.url);
+      const txt = await r.text();
+      const div = document.createElement('div');
+      div.innerHTML = txt;
+      pageCache[p.url] = { title: p.title, text: div.innerText.slice(0, 30000) };
+    } catch (e) {
+      console.warn('❌ Failed to fetch', p.url, e);
+      pageCache[p.url] = { title: p.title, text: '' };
     }
-    if (results.length === 0) {
-      out.innerHTML = `<div class="result-item"><em>No results</em></div>`;
-      return;
+    status.textContent = `🔍 Indexando (${i + 1}/${pagesToIndex.length})...`;
+  });
+
+  await Promise.all(ps);
+  document.body.removeChild(status);
+  indexed = true;
+  indexingInProgress = false;
+  flash('✅ Páginas indexadas para pesquisa');
+}
+
+// Run the search
+$('#search-btn')?.addEventListener('click', async () => {
+  const q = $('#site-search').value.trim().toLowerCase();
+  if (!q) return;
+  if (!indexed) await indexPages();
+  runSearch(q);
+});
+
+$('#site-search')?.addEventListener('keydown', e => {
+  if (e.key === 'Enter') $('#search-btn').click();
+});
+
+function runSearch(q) {
+  const out = $('#search-results');
+  out.innerHTML = '';
+  const results = [];
+
+  for (const url in pageCache) {
+    const entry = pageCache[url];
+    if (!entry.text) continue;
+    const idx = entry.text.toLowerCase().indexOf(q);
+    if (idx !== -1) {
+      const start = Math.max(0, idx - 80);
+      const snippet =
+        (start ? '…' : '') +
+        entry.text.slice(start, idx + 160) +
+        (entry.text.length > idx + 160 ? '…' : '');
+      results.push({ url, title: entry.title, snippet });
     }
-    results.forEach(r => {
-      const item = document.createElement('div');
-      item.className = 'result-item';
-      item.innerHTML = `<h4>${r.title}</h4><div class="result-snippet">${escapeHtml(r.snippet)}</div><div style="margin-top:8px"><a href="${r.url}" target="content">Open</a></div>`;
-      out.appendChild(item);
-    });
   }
 
-  function escapeHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  if (results.length === 0) {
+    out.innerHTML = `<div class="result-item"><em>Nenhum resultado encontrado.</em></div>`;
+    return;
+  }
 
-  window.addEventListener('load', loadNotes);
+  results.forEach(r => {
+    const item = document.createElement('div');
+    item.className = 'result-item';
+    item.innerHTML = `
+      <h4>${r.title}</h4>
+      <div class="result-snippet">${highlight(r.snippet, q)}</div>
+      <div style="margin-top:8px">
+        <a href="${r.url}" target="content">Abrir</a>
+      </div>
+    `;
+    out.appendChild(item);
+  });
+}
 
-})();
+// Highlight matching keyword
+function highlight(snippet, q) {
+  const escaped = escapeHtml(snippet);
+  const regex = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+  return escaped.replace(regex, '<mark>$1</mark>');
+}
+
+function escapeHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }

@@ -101,120 +101,162 @@
     setTimeout(() => el.remove(), 1800);
   }
 
-  // --- AUTO-INDEXING SEARCH SYSTEM ---
+  //Search  
+ const pagesToIndex = [
+  {url:'welcome.html', title:'Bem-vindo'},
 
-const pageCache = {};
-let indexed = false;
-let indexingInProgress = false;
+  // ----------------------------
+  // 📘 ANO 1
+  // ----------------------------
 
-// Collect all sidebar links automatically
-function collectSidebarLinks() {
-  const links = Array.from(document.querySelectorAll('.menu a'));
-  const unique = new Map();
-  links.forEach(link => {
-    const url = link.getAttribute('href');
-    if (!url || unique.has(url)) return;
-    unique.set(url, { url, title: link.textContent.trim() });
-  });
-  return Array.from(unique.values());
-}
+  // Programação
+  {url:'year1/programacao/modulo1.html', title:'Ano 1 — Programação Módulo 1'},
+  {url:'year1/programacao/modulo2.html', title:'Ano 1 — Programação Módulo 2'},
+  {url:'year1/programacao/modulo3.html', title:'Ano 1 — Programação Módulo 3'},
 
-// Fetch and index the text content of all linked pages
-async function indexPages() {
-  if (indexed || indexingInProgress) return;
-  indexingInProgress = true;
+  // Redes
+  {url:'year1/redes/modulo1.html', title:'Ano 1 — Redes Módulo 1'},
+  {url:'year1/redes/modulo2.html', title:'Ano 1 — Redes Módulo 2'},
+  {url:'year1/redes/modulo3.html', title:'Ano 1 — Redes Módulo 3'},
 
-  const pagesToIndex = collectSidebarLinks();
-  const status = document.createElement('div');
-  status.id = 'search-status';
-  status.textContent = '🔍 A indexar páginas...';
-  status.style.cssText = `
-    position: fixed; bottom: 16px; left: 16px;
-    background: var(--card, #fff);
-    border: 1px solid var(--border, #ccc);
-    padding: 8px 12px; border-radius: 8px;
-    font-size: 14px; z-index: 9999;
-  `;
-  document.body.appendChild(status);
+  // Física
+  {url:'year1/fisica/f1.html', title:'Ano 1 — Física F1'},
+  {url:'year1/fisica/f2.html', title:'Ano 1 — Física F2'},
+  {url:'year1/fisica/f3.html', title:'Ano 1 — Física F3'},
+  {url:'year1/fisica/f4.html', title:'Ano 1 — Física F4'},
 
-  const ps = pagesToIndex.map(async (p, i) => {
-    try {
-      const r = await fetch(p.url);
-      const txt = await r.text();
-      const div = document.createElement('div');
-      div.innerHTML = txt;
-      pageCache[p.url] = { title: p.title, text: div.innerText.slice(0, 30000) };
-    } catch (e) {
-      console.warn('❌ Failed to fetch', p.url, e);
-      pageCache[p.url] = { title: p.title, text: '' };
-    }
-    status.textContent = `🔍 Indexando (${i + 1}/${pagesToIndex.length})...`;
-  });
+  // Química
+  {url:'year1/quimica/f1.html', title:'Ano 1 — Química F1'},
+  {url:'year1/quimica/f2.html', title:'Ano 1 — Química F2'},
+  {url:'year1/quimica/f3.html', title:'Ano 1 — Química F3'},
+  {url:'year1/quimica/f4.html', title:'Ano 1 — Química F4'},
 
-  await Promise.all(ps);
-  document.body.removeChild(status);
-  indexed = true;
-  indexingInProgress = false;
-  flash('✅ Páginas indexadas para pesquisa');
-}
+  // Matemática
+  {url:'year1/matematica/p1.html', title:'Ano 1 — Matemática P1'},
+  {url:'year1/matematica/p2.html', title:'Ano 1 — Matemática P2'},
+  {url:'year1/matematica/p3.html', title:'Ano 1 — Matemática P3'},
+  {url:'year1/matematica/p4.html', title:'Ano 1 — Matemática P4'},
+  {url:'year1/matematica/p5.html', title:'Ano 1 — Matemática P5'},
+  {url:'year1/matematica/p6.html', title:'Ano 1 — Matemática P6'},
+  {url:'year1/matematica/p7.html', title:'Ano 1 — Matemática P7'},
+  {url:'year1/matematica/p8.html', title:'Ano 1 — Matemática P8'},
 
-// Run the search
-$('#search-btn')?.addEventListener('click', async () => {
-  const q = $('#site-search').value.trim().toLowerCase();
-  if (!q) return;
-  if (!indexed) await indexPages();
-  runSearch(q);
-});
+  // TIC
+  {url:'year1/tic/modulo1.html', title:'Ano 1 — TIC Módulo 1'},
+  {url:'year1/tic/modulo2.html', title:'Ano 1 — TIC Módulo 2'},
+  {url:'year1/tic/modulo3.html', title:'Ano 1 — TIC Módulo 3'},
 
-$('#site-search')?.addEventListener('keydown', e => {
-  if (e.key === 'Enter') $('#search-btn').click();
-});
+  // Arquitetura
+  {url:'year1/arquitectura/modulo1/unidade1.html', title:'Ano 1 — Arquitetura Módulo 1 Unidade 1'},
+  {url:'year1/arquitectura/modulo1/unidade2.html', title:'Ano 1 — Arquitetura Módulo 1 Unidade 2'},
+  {url:'year1/arquitectura/modulo2.html', title:'Ano 1 — Arquitetura Módulo 2'},
+  {url:'year1/arquitectura/modulo3.html', title:'Ano 1 — Arquitetura Módulo 3'},
 
-function runSearch(q) {
-  const out = $('#search-results');
-  out.innerHTML = '';
-  const results = [];
 
-  for (const url in pageCache) {
-    const entry = pageCache[url];
-    if (!entry.text) continue;
-    const idx = entry.text.toLowerCase().indexOf(q);
-    if (idx !== -1) {
-      const start = Math.max(0, idx - 80);
-      const snippet =
-        (start ? '…' : '') +
-        entry.text.slice(start, idx + 160) +
-        (entry.text.length > idx + 160 ? '…' : '');
-      results.push({ url, title: entry.title, snippet });
-    }
-  }
+  // ----------------------------
+  // 📗 ANO 2
+  // ----------------------------
 
-  if (results.length === 0) {
-    out.innerHTML = `<div class="result-item"><em>Nenhum resultado encontrado.</em></div>`;
-    return;
-  }
+  // Programação
+  {url:'year2/programacao/modulo1.html', title:'Ano 2 — Programação Módulo 1'},
+  {url:'year2/programacao/modulo2.html', title:'Ano 2 — Programação Módulo 2'},
+  {url:'year2/programacao/modulo3.html', title:'Ano 2 — Programação Módulo 3'},
 
-  results.forEach(r => {
-    const item = document.createElement('div');
-    item.className = 'result-item';
-    item.innerHTML = `
-      <h4>${r.title}</h4>
-      <div class="result-snippet">${highlight(r.snippet, q)}</div>
-      <div style="margin-top:8px">
-        <a href="${r.url}" target="content">Abrir</a>
-      </div>
-    `;
-    out.appendChild(item);
-  });
-}
+  // Redes
+  {url:'year2/redes/modulo1.html', title:'Ano 2 — Redes Módulo 1'},
+  {url:'year2/redes/modulo2.html', title:'Ano 2 — Redes Módulo 2'},
+  {url:'year2/redes/modulo3.html', title:'Ano 2 — Redes Módulo 3'},
 
-// Highlight matching keyword
-function highlight(snippet, q) {
-  const escaped = escapeHtml(snippet);
-  const regex = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-  return escaped.replace(regex, '<mark>$1</mark>');
-}
+  // Física
+  {url:'year2/fisica/f1.html', title:'Ano 2 — Física F1'},
+  {url:'year2/fisica/f2.html', title:'Ano 2 — Física F2'},
+  {url:'year2/fisica/f3.html', title:'Ano 2 — Física F3'},
+  {url:'year2/fisica/f4.html', title:'Ano 2 — Física F4'},
 
-function escapeHtml(s) {
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  })();
+  // Química
+  {url:'year2/quimica/f1.html', title:'Ano 2 — Química F1'},
+  {url:'year2/quimica/f2.html', title:'Ano 2 — Química F2'},
+  {url:'year2/quimica/f3.html', title:'Ano 2 — Química F3'},
+  {url:'year2/quimica/f4.html', title:'Ano 2 — Química F4'},
+
+  // Matemática
+  {url:'year2/matematica/p1.html', title:'Ano 2 — Matemática P1'},
+  {url:'year2/matematica/p2.html', title:'Ano 2 — Matemática P2'},
+  {url:'year2/matematica/p3.html', title:'Ano 2 — Matemática P3'},
+  {url:'year2/matematica/p4.html', title:'Ano 2 — Matemática P4'},
+  {url:'year2/matematica/p5.html', title:'Ano 2 — Matemática P5'},
+  {url:'year2/matematica/p6.html', title:'Ano 2 — Matemática P6'},
+  {url:'year2/matematica/p7.html', title:'Ano 2 — Matemática P7'},
+  {url:'year2/matematica/p8.html', title:'Ano 2 — Matemática P8'},
+
+  // TIC
+  {url:'year2/tic/modulo1.html', title:'Ano 2 — TIC Módulo 1'},
+  {url:'year2/tic/modulo2.html', title:'Ano 2 — TIC Módulo 2'},
+  {url:'year2/tic/modulo3.html', title:'Ano 2 — TIC Módulo 3'},
+
+  // Arquitetura
+  {url:'year2/arquitectura/modulo1/unidade1.html', title:'Ano 2 — Arquitetura Módulo 1 Unidade 1'},
+  {url:'year2/arquitectura/modulo1/unidade2.html', title:'Ano 2 — Arquitetura Módulo 1 Unidade 2'},
+  {url:'year2/arquitectura/modulo2.html', title:'Ano 2 — Arquitetura Módulo 2'},
+  {url:'year2/arquitectura/modulo3.html', title:'Ano 2 — Arquitetura Módulo 3'},
+
+
+  // ----------------------------
+  // 📙 ANO 3
+  // ----------------------------
+
+  // Programação
+  {url:'year3/programacao/modulo1.html', title:'Ano 3 — Programação Módulo 1'},
+  {url:'year3/programacao/modulo2.html', title:'Ano 3 — Programação Módulo 2'},
+  {url:'year3/programacao/modulo3.html', title:'Ano 3 — Programação Módulo 3'},
+
+  // Redes
+  {url:'year3/redes/modulo1.html', title:'Ano 3 — Redes Módulo 1'},
+  {url:'year3/redes/modulo2.html', title:'Ano 3 — Redes Módulo 2'},
+  {url:'year3/redes/modulo3.html', title:'Ano 3 — Redes Módulo 3'},
+
+  // Física
+  {url:'year3/fisica/f1.html', title:'Ano 3 — Física F1'},
+  {url:'year3/fisica/f2.html', title:'Ano 3 — Física F2'},
+  {url:'year3/fisica/f3.html', title:'Ano 3 — Física F3'},
+  {url:'year3/fisica/f4.html', title:'Ano 3 — Física F4'},
+
+  // Química
+  {url:'year3/quimica/f1.html', title:'Ano 3 — Química F1'},
+  {url:'year3/quimica/f2.html', title:'Ano 3 — Química F2'},
+  {url:'year3/quimica/f3.html', title:'Ano 3 — Química F3'},
+  {url:'year3/quimica/f4.html', title:'Ano 3 — Química F4'},
+
+  // Matemática
+  {url:'year3/matematica/p1.html', title:'Ano 3 — Matemática P1'},
+  {url:'year3/matematica/p2.html', title:'Ano 3 — Matemática P2'},
+  {url:'year3/matematica/p3.html', title:'Ano 3 — Matemática P3'},
+  {url:'year3/matematica/p4.html', title:'Ano 3 — Matemática P4'},
+  {url:'year3/matematica/p5.html', title:'Ano 3 — Matemática P5'},
+  {url:'year3/matematica/p6.html', title:'Ano 3 — Matemática P6'},
+  {url:'year3/matematica/p7.html', title:'Ano 3 — Matemática P7'},
+  {url:'year3/matematica/p8.html', title:'Ano 3 — Matemática P8'},
+
+  // TIC
+  {url:'year3/tic/modulo1.html', title:'Ano 3 — TIC Módulo 1'},
+  {url:'year3/tic/modulo2.html', title:'Ano 3 — TIC Módulo 2'},
+  {url:'year3/tic/modulo3.html', title:'Ano 3 — TIC Módulo 3'},
+
+  // Arquitetura
+  {url:'year3/arquitectura/modulo1/unidade1.html', title:'Ano 3 — Arquitetura Módulo 1 Unidade 1'},
+  {url:'year3/arquitectura/modulo1/unidade2.html', title:'Ano 3 — Arquitetura Módulo 1 Unidade 2'},
+  {url:'year3/arquitectura/modulo2.html', title:'Ano 3 — Arquitetura Módulo 2'},
+  {url:'year3/arquitectura/modulo3.html', title:'Ano 3 — Arquitetura Módulo 3'},
+
+
+  // ----------------------------
+  // 🧠 PRÁTICA
+  // ----------------------------
+  {url:'practice/python.html', title:'Prática — Python'},
+  {url:'practice/javascript.html', title:'Prática — JavaScript'},
+  {url:'practice/java.html', title:'Prática — Java'},
+  {url:'practice/sql.html', title:'Prática — SQL'},
+  {url:'practice/c.html', title:'Prática — C'},
+  {url:'practice/csharp.html', title:'Prática — C#'},
+  {url:'practice/cpp.html', title:'Prática — C++'}
+];

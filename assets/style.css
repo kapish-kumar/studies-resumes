@@ -216,3 +216,76 @@ a:focus, button:focus, input:focus, textarea:focus {
   outline:3px solid rgba(26,115,232,0.2);
   outline-offset:2px;
   }
+
+/* 🔍 Search results area */
+#search-results {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.result-item {
+  background: var(--card, #f9f9f9);
+  border: 1px solid var(--border, #ddd);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  transition: background 0.3s, transform 0.2s;
+}
+
+.result-item:hover {
+  background: var(--card-hover, #f0f0f0);
+  transform: translateY(-2px);
+}
+
+.result-item h4 {
+  font-size: 1.1rem;
+  margin: 0 0 0.5rem;
+  color: var(--text-primary, #222);
+}
+
+.result-snippet {
+  font-size: 0.9rem;
+  color: var(--text-secondary, #555);
+  line-height: 1.4;
+  margin-bottom: 0.8rem;
+}
+
+/* ✨ “Abrir” Button */
+.open-page {
+  background: var(--accent, #0078ff);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.2s;
+}
+
+.open-page:hover {
+  background: var(--accent-hover, #005fcc);
+  transform: scale(1.05);
+}
+
+.open-page:active {
+  transform: scale(0.97);
+}
+
+/* Optional: match dark mode */
+@media (prefers-color-scheme: dark) {
+  .result-item {
+    background: var(--card-dark, #1f1f1f);
+    border-color: #333;
+  }
+  .result-item h4 {
+    color: #eee;
+  }
+  .result-snippet {
+    color: #bbb;
+  }
+  .open-page {
+    background: #0078ff;
+  }
+  }
